@@ -51,11 +51,27 @@ export const journeyData = [
         location: "Vadodara",
         type: "corporate",
         description: [
-            "Developed slot-based media playlists to manage brand and aggregate content.",
-            "Integrated RabbitMQ for at-least-once delivery and Redis pub/sub for task coordination.",
-            "Collaborated on the Pushtishangar MERN-stack e-commerce platform, refining UX flows and building a React admin panel."
+            "Architected an offline-first, dynamic advertisement delivery network for edge devices, moving away from fragile WebSockets to a resilient RabbitMQ message queue system.",
+            "Engineered edge devices to securely consume daily ad manifests—including gender, age, and emotional demographic triggers—ensuring 100% playback reliability despite network drops.",
+            "Optimized high-volume analytics dashboards using Redis caching to instantly aggregate real-time ad performance across distributed locations, devices, and brands.",
+            "Spearheaded direct client interactions and full-stack development for custom B2B solutions, including an employee task management system for Uma Inc. and the Pushtishangar e-commerce platform."
         ],
-        techStack: ["NodeJS", "RabbitMQ", "Redis", "MongoDB", "ReactJS"]
+        techStack: ["NodeJS", "RabbitMQ", "Redis", "MongoDB", "ExpressJS"]
+    },
+    {
+        id: "marwiz-summer-23",
+        period: "Jun 2023 — Jul 2023",
+        role: "Summer Engineering Intern",
+        entity: "Marwiz Tech Pvt. Ltd.",
+        location: "Vadodara",
+        type: "corporate",
+        description: [
+            "Transitioned from academic environments to a rigorous professional setting, marking a profound and overwhelming shift in my engineering mindset.",
+            "Adapted to strict production-grade development standards, navigating intensive code reviews, fixed architectural structures, and professional version control workflows.",
+            "Applied foundational web technology concepts to architect 'Snap Stream', a real-world digital signage application.",
+            "Mastered WebSocket fundamentals to bridge mobile interfaces with public displays, establishing real-time session links via QR code scanning."
+        ],
+        techStack: ["NodeJS", "WebSocket", "ReactJS", "ExpressJS"]
     },
     {
         id: "pdeu-2024",
@@ -65,12 +81,11 @@ export const journeyData = [
         location: "Gandhinagar",
         type: "education",
         description: [
-            "Graduated with a CGPA of 9.19/10.",
-            "Completed a specialized summer internship (Jun 2023 — Jul 2023) at Marwiz Tech to build Snap Stream.",
-            "Created a web application pairing digital signage displays with mobile filters, enabling in-app image capture and Snapchat-style AR try-on features.",
-            "Synchronized mobile inputs and display screens via WebSocket to minimize latency."
+            "Graduated with a 9.19/10 CGPA, focusing intensely on systems-level programming, data structures, and algorithmic complexity.",
+            "Built rigorous academic foundations across core computer science domains: Operating Systems, Database Management Systems, Computer Networks, and Distributed Cloud Architecture.",
+            "Emphasized rigorous Software Engineering practices, prioritizing clean architectural diagrams, modular system design, and production-grade technical documentation."
         ],
-        techStack: ["MongoDB", "ExpressJS", "ReactJS", "NodeJS", "Python"],
+        techStack: ["DBMS", "OS", "Computer Networks", "Cloud Computing", "Software Engineering"],
         credentials: [
             {
                 label: "MongoDB Developer & Admin",
