@@ -8,13 +8,13 @@ export const journeyData = [
         location: "Ahmedabad",
         type: "corporate",
         description: [
-            "WeConverse was a joint venture between Marwiz and WeHear. After serving as a core contributor to the architecture, I transferred to WeHear to help scale their platforms and tackle new engineering challenges.",
-            "Following the transfer, my scope expanded into collaborative hardware integration, where our team built a MERN-stack audiometer system for administrators and audiologists.",
-            "Played a crucial role in implementing BLE communication using ESP32 (Arduino) and Nordic nRF via Node.js, establishing DSP pipelines for pure-tone audiometry.",
-            "Contributed to backend services for a Lenskart inventory management system, assisting in the design of RESTful APIs for stock tracking and order processing.",
-            "Collaborated on Docker container builds and manual deployments on Azure VMs behind an Nginx reverse proxy."
+            "Took ownership of modernizing the organization's deployment infrastructure, migrating systems from Railway to a fully containerized Azure environment and establishing automated CI/CD pipelines from scratch.",
+            "Served as a core developer for WeConfigPro, the flagship proprietary software used extensively across the organization for fitting, tuning, and calibrating all WeHear devices.",
+            "Architected an end-to-end Inventory Management System ensuring strict hardware traceability—from vendor raw material IQC and dynamic BOMs to SKD/SFG states and final BoxID quality assurance.",
+            "Integrated AI-driven productivity features into the speech ecosystem, including a meeting analysis tool that generates automated MoMs, cruxes, and final verdicts from long-form audio.",
+            "Currently contributing to an in-progress MERN-stack audiometer system utilizing Web Bluetooth (BLE) to orchestrate pure-tone DSP pipelines via ESP32 hardware."
         ],
-        techStack: ["NodeJS", "ExpressJS", "MongoDB", "ESP32", "Docker", "Azure"],
+        techStack: ["NodeJS", "Azure", "CI/CD", "ReactJS", "MongoDB", "ESP32", "BLE"],
         credentials: [
             {
                 label: "ISO 13485:2016 Training",

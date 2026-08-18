@@ -5,7 +5,7 @@ import { useState, useRef } from 'react';
 import { motion, AnimatePresence, useScroll, useSpring } from 'framer-motion';
 import { journeyData } from '../data/journey';
 import { ExternalLink, ArrowRight, X, Network } from 'lucide-react';
-import { AudiologyPipeline, DynamicAdDemo, SnapStreamDemo, WeConverseDemo } from './Visualizers';
+import { WeConfigProDemo, DynamicAdDemo, SnapStreamDemo, WeConverseDemo } from './Visualizers';
 
 // Import Deep Dive components
 import WeHear from './deepdives/WeHear';
@@ -95,7 +95,7 @@ export default function Timeline() {
                                 </div>
 
                                 {/* Inject Visualizers into correct spots */}
-                                {item.id === 'wehear-present' && <div className="mb-8"><AudiologyPipeline /></div>}
+                                {item.id === 'wehear-present' && <div className="mb-8"><WeConfigProDemo /></div>}
                                 {item.id === 'marwiz-ft' && <div className="mb-8"><WeConverseDemo /></div>}
                                 {item.id === 'marwiz-intern-long' && <div className="mb-8"><DynamicAdDemo /></div>}
                                 {item.id === 'marwiz-summer-23' && <div className="mb-8"><SnapStreamDemo /></div>}
