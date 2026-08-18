@@ -8,11 +8,11 @@ export const journeyData = [
         location: "Ahmedabad",
         type: "corporate",
         description: [
-            "WeConverse was a joint venture between Marwiz and WeHear. As a core developer of the architecture, I was offered a transfer to WeHear to explore new challenges and scale their platforms.",
-            "Following the transfer, my scope expanded into hardware integration, where I built a MERN-stack audiometer system for administrators and audiologists.",
-            "Implemented BLE communication using ESP32 (Arduino) and Nordic nRF via Node.js, establishing DSP pipelines for pure-tone audiometry.",
-            "Developed backend services for a Lenskart inventory management system, designing RESTful APIs for stock tracking and order processing.",
-            "Managed Docker container builds and manual deployments on Azure VMs behind an Nginx reverse proxy."
+            "WeConverse was a joint venture between Marwiz and WeHear. After serving as a core contributor to the architecture, I transferred to WeHear to help scale their platforms and tackle new engineering challenges.",
+            "Following the transfer, my scope expanded into collaborative hardware integration, where our team built a MERN-stack audiometer system for administrators and audiologists.",
+            "Played a crucial role in implementing BLE communication using ESP32 (Arduino) and Nordic nRF via Node.js, establishing DSP pipelines for pure-tone audiometry.",
+            "Contributed to backend services for a Lenskart inventory management system, assisting in the design of RESTful APIs for stock tracking and order processing.",
+            "Collaborated on Docker container builds and manual deployments on Azure VMs behind an Nginx reverse proxy."
         ],
         techStack: ["NodeJS", "ExpressJS", "MongoDB", "ESP32", "Docker", "Azure"],
         credentials: [
@@ -30,12 +30,12 @@ export const journeyData = [
         location: "Vadodara",
         type: "corporate",
         description: [
-            "Transitioned to a full-time role to spearhead the backend development of the WeConverse event management app.",
-            "Engineered a complex real-time translation architecture supporting 72 languages, successfully deployed at numerous national and international conferences.",
-            "Integrated Azure Translator Text and Google Cloud Speech-to-Text, leveraging WebSocket and socket.io for seamless in-app multilingual support.",
-            "Containerized the application with Docker and deployed it on Azure App Service."
+            "Transitioned to a full-time role, taking on core responsibilities in developing the WeConverse backend architecture, originally designed as a 1-to-1 mobile translation service for WeHear medical devices.",
+            "Part of the engineering group that successfully pivoted the platform for global event translation, launching the enterprise product at the BNI Global Convention 2024 in Hawaii.",
+            "Helped design a real-time WebSocket multiplexing engine that routes live audio streams through high-speed Speech-to-Text (STT) inference and Neural Machine Translation (NMT) pipelines.",
+            "Worked alongside the team to scale the platform for massive concurrent deployments at state-level events, including the National Urban Conclave 2025 and the ICEVI World Conference."
         ],
-        techStack: ["ReactJS", "NodeJS", "WebSocket", "Azure Translation", "Docker"],
+        techStack: ["NodeJS", "WebSocket", "Audio Chunking", "NMT Pipelines", "Docker"],
         credentials: [
             {
                 label: "weconverse.in",
@@ -51,10 +51,10 @@ export const journeyData = [
         location: "Vadodara",
         type: "corporate",
         description: [
-            "Architected an offline-first, dynamic advertisement delivery network for edge devices, moving away from fragile WebSockets to a resilient RabbitMQ message queue system.",
-            "Engineered edge devices to securely consume daily ad manifests—including gender, age, and emotional demographic triggers—ensuring 100% playback reliability despite network drops.",
-            "Optimized high-volume analytics dashboards using Redis caching to instantly aggregate real-time ad performance across distributed locations, devices, and brands.",
-            "Spearheaded direct client interactions and full-stack development for custom B2B solutions, including an employee task management system for Uma Inc. and the Pushtishangar e-commerce platform."
+            "Contributed to the architecture of an offline-first, dynamic advertisement delivery network for edge devices, transitioning from fragile WebSockets to a resilient RabbitMQ message queue system.",
+            "Assisted in engineering edge devices to securely consume daily ad manifests—ensuring high playback reliability despite network drops.",
+            "Helped optimize high-volume analytics dashboards using Redis caching to aggregate real-time ad performance across distributed locations.",
+            "Participated in direct client interactions and full-stack development for custom B2B solutions, including an employee task management system for Uma Inc. and the Pushtishangar e-commerce platform."
         ],
         techStack: ["NodeJS", "RabbitMQ", "Redis", "MongoDB", "ExpressJS"]
     },
@@ -66,10 +66,10 @@ export const journeyData = [
         location: "Vadodara",
         type: "corporate",
         description: [
-            "Transitioned from academic environments to a rigorous professional setting, marking a profound and overwhelming shift in my engineering mindset.",
+            "Transitioned from academic environments to a rigorous professional setting, marking a profound shift in my engineering mindset.",
             "Adapted to strict production-grade development standards, navigating intensive code reviews, fixed architectural structures, and professional version control workflows.",
-            "Applied foundational web technology concepts to architect 'Snap Stream', a real-world digital signage application.",
-            "Mastered WebSocket fundamentals to bridge mobile interfaces with public displays, establishing real-time session links via QR code scanning."
+            "Collaborated on 'Snap Stream', applying foundational web technology concepts to a real-world digital signage application.",
+            "Gained hands-on experience with WebSockets to bridge mobile interfaces with public displays, establishing real-time session links via QR code scanning."
         ],
         techStack: ["NodeJS", "WebSocket", "ReactJS", "ExpressJS"]
     },
@@ -83,7 +83,8 @@ export const journeyData = [
         description: [
             "Graduated with a 9.19/10 CGPA, focusing intensely on systems-level programming, data structures, and algorithmic complexity.",
             "Built rigorous academic foundations across core computer science domains: Operating Systems, Database Management Systems, Computer Networks, and Distributed Cloud Architecture.",
-            "Emphasized rigorous Software Engineering practices, prioritizing clean architectural diagrams, modular system design, and production-grade technical documentation."
+            "Emphasized Software Engineering practices, prioritizing clean architectural diagrams, modular system design, and comprehensive technical documentation.",
+            "Partnered with peers to build multiple academic projects, applying theoretical knowledge into practical, full-stack, and data-driven applications."
         ],
         techStack: ["DBMS", "OS", "Computer Networks", "Cloud Computing", "Software Engineering"],
         credentials: [

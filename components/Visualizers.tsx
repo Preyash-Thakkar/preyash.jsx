@@ -158,7 +158,7 @@ export function WeConverseDemo() {
 
         setTimeout(() => {
             setStep(3);
-        }, 3000);
+        }, 3001);
 
         setTimeout(() => {
             setStep(4);
@@ -203,7 +203,7 @@ export function WeConverseDemo() {
                 {/* Cloud Engine (Center) */}
                 <div className={`lg:col-span-4 p-4 rounded-lg border flex flex-col justify-center items-center gap-2 transition-colors duration-300 ${step >= 2 ? 'bg-blue-900/10 border-blue-500/30' : 'bg-black border-neutral-800'}`}>
                     <Globe size={20} className={step === 3 ? 'text-blue-400 animate-spin' : 'text-neutral-600'} />
-                    <span className="text-[10px] text-neutral-500 text-center leading-relaxed">GCP Speech-to-Text<br />+ Azure Translator</span>
+                    <span className="text-[10px] text-neutral-500 text-center leading-relaxed">STT Inference Layer<br />+ NMT Translation Engine</span>
                     {step === 3 && <span className="text-blue-400 text-[9px] uppercase tracking-widest mt-1">Routing 72 Channels</span>}
                 </div>
 
