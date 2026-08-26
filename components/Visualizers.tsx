@@ -123,6 +123,7 @@ export function WeConfigProDemo() {
     const [step, setStep] = useState(0);
     const [isRunning, setIsRunning] = useState(false);
     const [log, setLog] = useState('WeConfigPro: Idle. Awaiting patient profile initialization.');
+    const [hasAutoPlayed, setHasAutoPlayed] = useState(false);
 
     const runFullLifecycle = () => {
         if (isRunning) return;
@@ -164,11 +165,22 @@ export function WeConfigProDemo() {
         }, 19000);
     };
 
+    const handleViewportEnter = () => {
+        if (!hasAutoPlayed && !isRunning) {
+            setHasAutoPlayed(true);
+            runFullLifecycle();
+        }
+    };
+
     const frequencies = ['125', '250', '500', '1k', '2k', '4k', '8k'];
     const targetGains = [20, 35, 60, 75, 85, 45, 15];
 
     return (
-        <div className="bg-[#0a0a0a] border border-neutral-900 rounded-xl p-6 font-mono text-sm text-neutral-400 w-full overflow-hidden shadow-lg shadow-cyan-900/5">
+        <motion.div
+            onViewportEnter={handleViewportEnter}
+            viewport={{ once: true, amount: 0.3 }}
+            className="bg-[#0a0a0a] border border-neutral-900 rounded-xl p-6 font-mono text-sm text-neutral-400 w-full overflow-hidden shadow-lg shadow-cyan-900/5"
+        >
 
             {/* Header */}
             <div className="flex justify-between items-center mb-6">
@@ -193,7 +205,7 @@ export function WeConfigProDemo() {
                     </div>
                 )}
 
-                {/* Phase 1: Oscilla Audiogram */}
+                {/* Phase 1: Oscilla Audiogram (Accurate Layout) */}
                 {step === 1 && (
                     <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="w-full h-full flex flex-col">
                         <div className="flex justify-between items-center border-b border-neutral-800 pb-3 mb-3">
@@ -202,6 +214,7 @@ export function WeConfigProDemo() {
                         </div>
 
                         <div className="flex-1 flex gap-4 w-full">
+
                             {/* RIGHT EAR GRAPH (Red) */}
                             <div className="w-1/2 h-full border border-neutral-800 rounded relative p-3 bg-neutral-900/30 overflow-hidden flex flex-col">
                                 <div className="flex justify-between items-center mb-1 relative z-20">
@@ -211,11 +224,14 @@ export function WeConfigProDemo() {
                                         <span className="flex items-center gap-1"><div className="w-3 h-0.5 bg-transparent border-t-2 border-dashed border-red-500" /> BC</span>
                                     </div>
                                 </div>
+                                {/* Grid */}
                                 <div className="absolute inset-0 top-8 grid grid-cols-4 grid-rows-3 gap-0 opacity-10 pointer-events-none">
                                     {[...Array(12)].map((_, i) => <div key={i} className="border-l border-t border-neutral-400" />)}
                                 </div>
                                 <svg className="w-full h-full absolute inset-0 top-4 z-10" viewBox="0 0 100 40" preserveAspectRatio="none">
+                                    {/* AC (Solid) */}
                                     <motion.polyline initial={{ pathLength: 0 }} animate={{ pathLength: 1 }} transition={{ duration: 1.2, ease: "easeOut" }} fill="none" stroke="#ef4444" strokeWidth="1.2" points="5,15 25,20 50,18 75,35 95,32" />
+                                    {/* BC (Dotted) */}
                                     <motion.polyline initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.8, delay: 1.2 }} fill="none" stroke="#ef4444" strokeWidth="1.2" strokeDasharray="3,3" points="5,5 25,12 50,15 75,25 95,22" />
                                 </svg>
                             </div>
@@ -229,19 +245,23 @@ export function WeConfigProDemo() {
                                         <span className="flex items-center gap-1"><div className="w-3 h-0.5 bg-transparent border-t-2 border-dashed border-blue-500" /> BC</span>
                                     </div>
                                 </div>
+                                {/* Grid */}
                                 <div className="absolute inset-0 top-8 grid grid-cols-4 grid-rows-3 gap-0 opacity-10 pointer-events-none">
                                     {[...Array(12)].map((_, i) => <div key={i} className="border-l border-t border-neutral-400" />)}
                                 </div>
                                 <svg className="w-full h-full absolute inset-0 top-4 z-10" viewBox="0 0 100 40" preserveAspectRatio="none">
+                                    {/* AC (Solid) */}
                                     <motion.polyline initial={{ pathLength: 0 }} animate={{ pathLength: 1 }} transition={{ duration: 1.2, ease: "easeOut" }} fill="none" stroke="#3b82f6" strokeWidth="1.2" points="5,10 25,15 50,22 75,22 95,35" />
+                                    {/* BC (Dotted) */}
                                     <motion.polyline initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.8, delay: 1.2 }} fill="none" stroke="#3b82f6" strokeWidth="1.2" strokeDasharray="3,3" points="5,5 25,8 50,15 75,12 95,28" />
                                 </svg>
                             </div>
+
                         </div>
                     </motion.div>
                 )}
 
-                {/* Phase 2: Algorithmic Suggestions */}
+                {/* Phase 2: Algorithmic Suggestions (Rhythmic Carousel) */}
                 {step === 2 && (
                     <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} className="w-full h-full flex flex-col justify-center">
                         <h4 className="text-[10px] text-cyan-500 mb-6 text-center uppercase tracking-widest font-bold">Hardware Recommendation Engine</h4>
@@ -260,14 +280,17 @@ export function WeConfigProDemo() {
                                         transition={{ times: [0, 0.4, 1], duration: 2.2, ease: "easeInOut", delay: 0.5 }}
                                         className="flex items-center gap-8 absolute z-10 px-4"
                                     >
+                                        {/* BTE */}
                                         <div className="flex flex-col items-center justify-center opacity-30 min-w-[24px]">
                                             <Headset size={18} className="text-neutral-500 mb-1" />
                                             <span className="text-[9px] font-bold text-neutral-500">BTE</span>
                                         </div>
+                                        {/* ITE */}
                                         <div className="flex flex-col items-center justify-center opacity-30 min-w-[24px]">
                                             <CircleDot size={18} className="text-neutral-500 mb-1" />
                                             <span className="text-[9px] font-bold text-neutral-500">ITE</span>
                                         </div>
+                                        {/* RIC */}
                                         <div className="flex flex-col items-center justify-center min-w-[24px]">
                                             <Ear size={24} className="text-cyan-400 mb-1 drop-shadow-[0_0_8px_rgba(6,182,212,0.8)]" />
                                             <span className="text-[11px] font-bold text-white tracking-widest">RIC</span>
@@ -297,6 +320,7 @@ export function WeConfigProDemo() {
                                     <span className="text-[11px] font-bold text-white tracking-widest">Open</span>
                                 </motion.div>
                             </div>
+
                         </div>
                     </motion.div>
                 )}
@@ -340,16 +364,14 @@ export function WeConfigProDemo() {
                     </motion.div>
                 )}
 
-                {/* Phase 4: Direct Web BLE Flash (FIXED: Perfectly aligned center line) */}
+                {/* Phase 4: Direct Web BLE Flash */}
                 {step === 4 && (
                     <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="w-full h-full flex flex-col items-center justify-center">
                         <span className="text-[10px] text-cyan-400 font-bold tracking-widest uppercase mb-6 flex items-center gap-2">
                             Writing Directly to Hardware
                         </span>
-
                         <div className="w-full flex items-start px-8">
 
-                            {/* Left Node */}
                             <div className="flex flex-col items-center gap-3 w-28">
                                 <div className="h-10 flex items-center justify-center">
                                     <LayoutDashboard size={32} className="text-cyan-500" />
@@ -357,7 +379,6 @@ export function WeConfigProDemo() {
                                 <span className="text-[9px] text-neutral-400 uppercase text-center tracking-widest leading-relaxed">WeConfig Web<br />(Clinic)</span>
                             </div>
 
-                            {/* Center Line Box (Locked to identical h-10 height as the icons) */}
                             <div className="flex-1 relative h-10 mx-2">
                                 <div className="w-full h-px border-t border-dashed border-neutral-700 absolute top-1/2 -translate-y-1/2 left-0" />
                                 <motion.div
@@ -370,7 +391,6 @@ export function WeConfigProDemo() {
                                 </motion.div>
                             </div>
 
-                            {/* Right Node */}
                             <div className="flex flex-col items-center gap-3 w-28">
                                 <div className="h-10 flex items-center justify-center">
                                     <Ear size={32} className="text-blue-400" />
@@ -420,7 +440,7 @@ export function WeConfigProDemo() {
                     </span>
                 </div>
             </div>
-        </div>
+        </motion.div>
     );
 }
 
@@ -429,6 +449,7 @@ export function WeConverseDemo() {
     const [step, setStep] = useState(0);
     const [transcript, setTranscript] = useState('');
     const [translations, setTranslations] = useState({ ja: '', fr: '', gu: '' });
+    const [hasAutoPlayed, setHasAutoPlayed] = useState(false);
 
     const runTranslation = () => {
         if (isTranslating) return;
@@ -461,8 +482,19 @@ export function WeConverseDemo() {
         }, 8500);
     };
 
+    const handleViewportEnter = () => {
+        if (!hasAutoPlayed && !isTranslating) {
+            setHasAutoPlayed(true);
+            runTranslation();
+        }
+    };
+
     return (
-        <div className="bg-[#0a0a0a] border border-neutral-900 rounded-xl p-6 font-mono text-sm text-neutral-400 w-full relative overflow-hidden shadow-lg shadow-cyan-900/5">
+        <motion.div
+            onViewportEnter={handleViewportEnter}
+            viewport={{ once: true, amount: 0.3 }}
+            className="bg-[#0a0a0a] border border-neutral-900 rounded-xl p-6 font-mono text-sm text-neutral-400 w-full relative overflow-hidden shadow-lg shadow-cyan-900/5"
+        >
             <div className="flex justify-between items-center mb-6">
                 <p className="text-neutral-500 text-xs uppercase tracking-wider">WeConverse: Real-Time Translation</p>
                 <button
@@ -531,7 +563,7 @@ export function WeConverseDemo() {
 
                 </div>
             </div>
-        </div>
+        </motion.div>
     );
 }
 export function SnapStreamDemo() {
@@ -540,6 +572,7 @@ export function SnapStreamDemo() {
     const [isSending, setIsSending] = useState(false);
     const [isCapturing, setIsCapturing] = useState(false);
     const [log, setLog] = useState('Signage active. Awaiting QR scan for session init...');
+    const [hasAutoPlayed, setHasAutoPlayed] = useState(false);
 
     const simulateScan = () => {
         setLog('Mobile client scanned QR. Establishing WebSocket handshake...');
@@ -547,6 +580,20 @@ export function SnapStreamDemo() {
             setSessionState('connected');
             setLog('Socket connected. Mobile device assigned as session remote.');
         }, 1200);
+    };
+
+    const runAutoDemo = () => {
+        if (hasAutoPlayed) return;
+        setHasAutoPlayed(true);
+        simulateScan();
+        setTimeout(() => applyAsset('id_jewelry_01', 'Jewelry'), 2200);
+        setTimeout(() => triggerCapture(), 3600);
+    };
+
+    const handleViewportEnter = () => {
+        if (!hasAutoPlayed) {
+            runAutoDemo();
+        }
     };
 
     const applyAsset = (assetId: string, logName: string) => {
@@ -573,7 +620,11 @@ export function SnapStreamDemo() {
     }
 
     return (
-        <div className="bg-[#0a0a0a] border border-neutral-900 rounded-xl p-6 font-mono text-sm text-neutral-400 w-full relative overflow-hidden shadow-lg shadow-cyan-900/5">
+        <motion.div
+            onViewportEnter={handleViewportEnter}
+            viewport={{ once: true, amount: 0.3 }}
+            className="bg-[#0a0a0a] border border-neutral-900 rounded-xl p-6 font-mono text-sm text-neutral-400 w-full relative overflow-hidden shadow-lg shadow-cyan-900/5"
+        >
             <div className="flex justify-between items-center mb-6">
                 <p className="text-neutral-500 text-xs uppercase tracking-wider">Snap Stream: Remote Architecture</p>
                 {sessionState === 'connected' && (
@@ -676,7 +727,7 @@ export function SnapStreamDemo() {
                     {log}
                 </span>
             </div>
-        </div>
+        </motion.div>
     );
 }
 export function DynamicAdDemo() {
@@ -685,6 +736,7 @@ export function DynamicAdDemo() {
     const [log, setLog] = useState('Edge device offline. Awaiting morning RabbitMQ sync...');
     const [stats, setStats] = useState({ headCount: 1240, male: 58, female: 42 });
     const [detected, setDetected] = useState('');
+    const [hasAutoPlayed, setHasAutoPlayed] = useState(false);
 
     const runSimulation = () => {
         if (isRunning) return;
@@ -721,8 +773,19 @@ export function DynamicAdDemo() {
         }, 10000);
     };
 
+    const handleViewportEnter = () => {
+        if (!hasAutoPlayed && !isRunning) {
+            setHasAutoPlayed(true);
+            runSimulation();
+        }
+    };
+
     return (
-        <div className="bg-[#0a0a0a] border border-neutral-900 rounded-xl p-6 font-mono text-sm text-neutral-400 w-full relative overflow-hidden shadow-lg shadow-purple-900/5">
+        <motion.div
+            onViewportEnter={handleViewportEnter}
+            viewport={{ once: true, amount: 0.3 }}
+            className="bg-[#0a0a0a] border border-neutral-900 rounded-xl p-6 font-mono text-sm text-neutral-400 w-full relative overflow-hidden shadow-lg shadow-purple-900/5"
+        >
             <div className="flex justify-between items-center mb-6">
                 <p className="text-neutral-500 text-xs uppercase tracking-wider">Dynamic Ad Delivery & Analytics</p>
                 <button
@@ -807,6 +870,6 @@ export function DynamicAdDemo() {
                     {log}
                 </span>
             </div>
-        </div>
+        </motion.div>
     );
 }
