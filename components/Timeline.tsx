@@ -5,12 +5,14 @@ import { useState, useRef } from 'react';
 import { motion, AnimatePresence, useScroll, useSpring } from 'framer-motion';
 import { journeyData } from '../data/journey';
 import { ExternalLink, ArrowRight, X, Network } from 'lucide-react';
-import { AudiologyPipeline, SnapStreamDemo, WeConverseDemo } from './Visualizers';
+import { WeConfigProDemo, DynamicAdDemo, SnapStreamDemo, WeConverseDemo } from './Visualizers';
 
-// Import our new separated Deep Dive components
+// Import Deep Dive components
 import WeHear from './deepdives/WeHear';
 import WeConverse from './deepdives/WeConverse';
 import SnapStream from './deepdives/SnapStream';
+import PDEU from './deepdives/PDEU';
+import MarwizIntern from './deepdives/MarwizIntern';
 
 export default function Timeline() {
     const [activeProject, setActiveProject] = useState<string | null>(null);
@@ -31,14 +33,15 @@ export default function Timeline() {
         document.body.style.overflow = activeProject ? 'hidden' : 'auto';
     }
 
+    // Which nodes should have a "Deep Dive" button?
+    const deepDiveNodes = ['wehear-present', 'marwiz-ft', 'marwiz-intern-long', 'marwiz-summer-23', 'pdeu-2024'];
+
     return (
         <>
             <div className="relative" ref={containerRef}>
 
-                {/* Static Background Line */}
                 <div className="absolute left-0 top-2 bottom-0 w-px bg-neutral-800" />
 
-                {/* Animated Glowing Scroll Line */}
                 <motion.div
                     className="absolute left-0 top-2 bottom-0 w-px bg-cyan-500 origin-top shadow-[0_0_12px_2px_rgba(6,182,212,0.6)]"
                     style={{ scaleY }}
@@ -54,8 +57,6 @@ export default function Timeline() {
                             transition={{ duration: 0.5, delay: index * 0.1 }}
                             className="relative pl-8 md:pl-12 group"
                         >
-                            {/* THE FIX: Animated Timeline Dot triggered by scroll position */}
-                            {/* THE FIX: Widened viewport margin so it reliably triggers and fills pure cyan */}
                             <motion.div
                                 initial={{ backgroundColor: '#171717', borderColor: '#404040', boxShadow: 'none' }}
                                 whileInView={{ backgroundColor: '#06b6d4', borderColor: '#06b6d4', boxShadow: '0 0 12px 2px rgba(6,182,212,0.6)' }}
@@ -74,7 +75,7 @@ export default function Timeline() {
                                             <h3 className="text-sm text-neutral-400">{item.entity} • {item.location}</h3>
                                         </div>
 
-                                        {['wehear-present', 'marwiz-ft', 'pdeu-2024'].includes(item.id) && (
+                                        {deepDiveNodes.includes(item.id) && (
                                             <button
                                                 onClick={() => setActiveProject(item.id)}
                                                 className="hidden md:flex items-center gap-2 text-xs font-mono text-cyan-500 hover:text-cyan-300 transition-colors group/btn"
@@ -93,11 +94,13 @@ export default function Timeline() {
                                     ))}
                                 </div>
 
-                                {item.id === 'wehear-present' && <div className="mb-8"><AudiologyPipeline /></div>}
+                                {/* Inject Visualizers into correct spots */}
+                                {item.id === 'wehear-present' && <div className="mb-8"><WeConfigProDemo /></div>}
                                 {item.id === 'marwiz-ft' && <div className="mb-8"><WeConverseDemo /></div>}
-                                {item.id === 'pdeu-2024' && <div className="mb-8"><SnapStreamDemo /></div>}
+                                {item.id === 'marwiz-intern-long' && <div className="mb-8"><DynamicAdDemo /></div>}
+                                {item.id === 'marwiz-summer-23' && <div className="mb-8"><SnapStreamDemo /></div>}
 
-                                {['wehear-present', 'marwiz-ft', 'pdeu-2024'].includes(item.id) && (
+                                {deepDiveNodes.includes(item.id) && (
                                     <button
                                         onClick={() => setActiveProject(item.id)}
                                         className="md:hidden w-full mb-6 py-2 flex items-center justify-center gap-2 text-xs font-mono text-cyan-500 border border-cyan-900/30 rounded-lg hover:bg-cyan-900/10 transition-colors"
@@ -132,7 +135,7 @@ export default function Timeline() {
                 </div>
             </div>
 
-            {/* --- SIDE DRAWER COMPONENT --- */}
+            {/* SIDE DRAWER */}
             <AnimatePresence>
                 {activeProject && (
                     <>
@@ -162,10 +165,12 @@ export default function Timeline() {
                                     </button>
                                 </div>
 
-                                {/* Dynamically Load the Correct Component */}
+                                {/* Dynamically Load Deep Dive Content */}
                                 {activeProject === 'wehear-present' && <WeHear />}
                                 {activeProject === 'marwiz-ft' && <WeConverse />}
-                                {activeProject === 'pdeu-2024' && <SnapStream />}
+                                {activeProject === 'marwiz-intern-long' && <MarwizIntern />}
+                                {activeProject === 'marwiz-summer-23' && <SnapStream />}
+                                {activeProject === 'pdeu-2024' && <PDEU />}
 
                             </div>
                         </motion.div>
