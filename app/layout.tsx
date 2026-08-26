@@ -26,7 +26,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       lang="en"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
-      {/* Added suppressHydrationWarning to ignore extension-injected attributes/styles */}
       <body className="min-h-full flex flex-col" suppressHydrationWarning>
         {children}
       </body>
