@@ -13,19 +13,23 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Preyash Thakkar ",
+  title: "Preyash Thakkar",
   description: "Software Developer focused on backend engineering, scalable systems, and hardware-to-software communication.",
   icons: {
     icon: '/favicon.svg',
   }
 };
-export default function RootLayout({ children }: LayoutProps<"/">) {
+
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html
       lang="en"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col">{children}</body>
+      {/* Added suppressHydrationWarning to ignore extension-injected attributes/styles */}
+      <body className="min-h-full flex flex-col" suppressHydrationWarning>
+        {children}
+      </body>
     </html>
   );
 }

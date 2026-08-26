@@ -1,4 +1,3 @@
-// data/journey.ts
 export const journeyData = [
     {
         id: "wehear-present",
