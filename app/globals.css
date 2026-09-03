@@ -10,3 +10,16 @@ body {
   background-color: #ffffff;
   color: #000000;
 }
+
+@keyframes attention-wobble {
+  0%, 90%, 100% { transform: rotate(0deg); }
+  92% { transform: rotate(-2.5deg); }
+  94% { transform: rotate(2.5deg); }
+  96% { transform: rotate(-1.5deg); }
+  98% { transform: rotate(1.5deg); }
+}
+
+.attention-wobble {
+  animation: attention-wobble 3.5s ease-in-out infinite;
+  transform-origin: center;
+}
