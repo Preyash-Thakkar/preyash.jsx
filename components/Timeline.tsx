@@ -78,7 +78,7 @@ export default function Timeline() {
                                         {deepDiveNodes.includes(item.id) && (
                                             <button
                                                 onClick={() => setActiveProject(item.id)}
-                                                className="hidden md:flex items-center gap-2 text-xs font-mono text-cyan-500 hover:text-cyan-300 transition-colors group/btn"
+                                                className="hidden md:flex items-center gap-2 text-xs font-mono text-cyan-500 hover:text-cyan-300 transition-colors group/btn attention-wobble"
                                             >
                                                 Deep Dive <ArrowRight size={14} className="group-hover/btn:translate-x-1 transition-transform" />
                                             </button>
@@ -103,7 +103,7 @@ export default function Timeline() {
                                 {deepDiveNodes.includes(item.id) && (
                                     <button
                                         onClick={() => setActiveProject(item.id)}
-                                        className="md:hidden w-full mb-6 py-2 flex items-center justify-center gap-2 text-xs font-mono text-cyan-500 border border-cyan-900/30 rounded-lg hover:bg-cyan-900/10 transition-colors"
+                                        className="md:hidden w-full mb-6 py-2 flex items-center justify-center gap-2 text-xs font-mono text-cyan-500 border border-cyan-900/30 rounded-lg hover:bg-cyan-900/10 transition-colors attention-wobble"
                                     >
                                         Deep Dive Architecture <ArrowRight size={14} />
                                     </button>
@@ -120,7 +120,7 @@ export default function Timeline() {
                                     {item.credentials && item.credentials.length > 0 && (
                                         <div className="flex flex-col gap-2 md:items-end shrink-0">
                                             {item.credentials.map((cred, idx) => (
-                                                <a key={idx} href={cred.href} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 text-xs text-neutral-500 hover:text-cyan-400 transition-colors">
+                                                <a key={idx} href={cred.href} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 text-xs text-neutral-500 hover:text-cyan-400 transition-colors attention-wobble">
                                                     <ExternalLink size={14} />
                                                     <span>{cred.label}</span>
                                                 </a>
