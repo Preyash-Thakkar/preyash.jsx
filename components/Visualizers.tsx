@@ -1,9 +1,9 @@
 // components/Visualizers.tsx
 'use client';
 
-import { motion } from 'framer-motion';
-import { useState } from 'react';
-import { Smartphone, MonitorPlay, Cpu, Server, LayoutDashboard, Database, Activity, Mic, Globe, MessageSquare, QrCode, Camera, BarChart3, Users, Settings2, Headphones, CheckCircle, CheckCircle2, Ear, Bluetooth, Stethoscope, ShieldCheck, CloudFog, Volume2, Wifi, SlidersHorizontal, CircleDashed, CircleDot, Headset } from 'lucide-react';
+import { AnimatePresence, motion } from 'framer-motion';
+import { useEffect, useState } from 'react';
+import { Smartphone, MonitorPlay, Cpu, Server, LayoutDashboard, Database, Activity, Mic, Globe, MessageSquare, QrCode, Camera, BarChart3, Users, Settings2, Headphones, CheckCircle, CheckCircle2, Ear, Bluetooth, Stethoscope, ShieldCheck, CloudFog, Volume2, Wifi, SlidersHorizontal, CircleDashed, CircleDot, Headset, Zap, MousePointerClick, Clock, Eye } from 'lucide-react';
 
 // export function AudiologyPipeline() {
 //     const [activeStep, setActiveStep] = useState(0);
@@ -733,29 +733,52 @@ export function SnapStreamDemo() {
 export function DynamicAdDemo() {
     const [step, setStep] = useState(0);
     const [isRunning, setIsRunning] = useState(false);
-    const [log, setLog] = useState('Edge device offline. Awaiting morning RabbitMQ sync...');
+    const [log, setLog] = useState('Edge device active. Awaiting RabbitMQ live sync...');
     const [stats, setStats] = useState({ headCount: 1240, male: 58, female: 42 });
-    const [detected, setDetected] = useState('');
+    const [detected, setDetected] = useState({ demographic: 'Male, 28-35', ad: 'Sports Apparel Campaign.mp4', topDevice: 'RIC-Pro S' });
     const [hasAutoPlayed, setHasAutoPlayed] = useState(false);
+
+    // Telemetry & Visitor Tracking state
+    const [activeTab, setActiveTab] = useState<'nodes' | 'analytics'>('nodes');
+    const [telemetry, setTelemetry] = useState({
+        impressions: 1420,
+        dwellSeconds: 0,
+        clicks: 310,
+        specOpens: 0
+    });
+
+    // Dwell time timer counter for visitor tracking
+    useEffect(() => {
+        const timer = setInterval(() => {
+            setTelemetry(prev => ({ ...prev, dwellSeconds: prev.dwellSeconds + 1 }));
+        }, 1000);
+        return () => clearInterval(timer);
+    }, []);
 
     const runSimulation = () => {
         if (isRunning) return;
         setIsRunning(true);
         setStep(1);
         setLog('RabbitMQ: Dispatching daily ad manifest & targeting rules to edge device...');
-        setDetected('');
+        setTelemetry(prev => ({ ...prev, impressions: prev.impressions + 1 }));
 
         // Step 2: Detection
         setTimeout(() => {
             setStep(2);
-            setDetected('Male, 28-35');
-            setLog('Camera Vision: Detected demographic [Male, 28-35]. Evaluating rules...');
+            const profiles = [
+                { demographic: 'Female, 28-35', ad: 'Zudio.mp4', topDevice: 'Inorbit Mall' },
+                { demographic: 'Male, 45-60', ad: 'Hearing Aid.mp4', topDevice: 'Bus Station' },
+                { demographic: 'Male, 18-25', ad: 'Nike.mp4', topDevice: 'Taksh Apartment' }
+            ];
+            const current = profiles[Math.floor(Math.random() * profiles.length)];
+            setDetected(current);
+            setLog(`Camera Vision: Detected demographic [${current.demographic}]. Matching targeted ad rules...`);
         }, 2500);
 
         // Step 3: Playback
         setTimeout(() => {
             setStep(3);
-            setLog('Edge Player: Rules matched. Playing "Sports_Apparel_Campaign.mp4"');
+            setLog(`Edge Player: Rules matched. Playing "${detected.ad}"`);
         }, 4500);
 
         // Step 4: Sync to Redis
@@ -780,91 +803,175 @@ export function DynamicAdDemo() {
         }
     };
 
+    const handleSpecClick = () => {
+        setTelemetry(prev => ({ ...prev, clicks: prev.clicks + 1, specOpens: prev.specOpens + 1 }));
+    };
+
     return (
         <motion.div
             onViewportEnter={handleViewportEnter}
             viewport={{ once: true, amount: 0.3 }}
-            className="bg-[#0a0a0a] border border-neutral-900 rounded-xl p-6 font-mono text-sm text-neutral-400 w-full relative overflow-hidden shadow-lg shadow-purple-900/5"
+            animate={{ rotate: [0, -0.6, 0.6, -0.4, 0.4, 0] }}
+            transition={{ duration: 0.6, repeat: Infinity, repeatDelay: 5, ease: "easeInOut" }}
+            className="bg-[#0a0a0a] border border-neutral-900 rounded-xl p-6 font-mono text-sm text-neutral-400 w-full relative overflow-hidden shadow-xl shadow-cyan-950/20"
         >
-            <div className="flex justify-between items-center mb-6">
-                <p className="text-neutral-500 text-xs uppercase tracking-wider">Dynamic Ad Delivery & Analytics</p>
-                <button
-                    onClick={runSimulation} disabled={isRunning}
-                    className="px-3 py-1.5 bg-neutral-800 text-white text-[10px] uppercase tracking-wider rounded hover:bg-neutral-700 transition-colors disabled:opacity-50"
-                >
-                    Simulate Edge Playback
-                </button>
+            {/* Header & Telemetry Switcher */}
+            <div className="flex flex-col sm:flex-row justify-between items-center mb-6 gap-3 text-center">
+                <p className="text-neutral-500 text-xs uppercase tracking-wider">Dynamic Ad Delivery & Live Visitor Telemetry</p>
+
+                <div className="flex items-center gap-3">
+                    <div className="flex bg-neutral-900 p-1 rounded border border-neutral-800">
+                        <button
+                            onClick={() => setActiveTab('nodes')}
+                            className={`px-3 py-1 text-[10px] uppercase font-bold rounded transition-colors ${activeTab === 'nodes' ? 'bg-cyan-950 text-cyan-400 border border-cyan-800/50' : 'text-neutral-400 hover:text-white'}`}
+                        >
+                            Pipeline View
+                        </button>
+                        <button
+                            onClick={() => setActiveTab('analytics')}
+                            className={`px-3 py-1 text-[10px] uppercase font-bold rounded transition-colors ${activeTab === 'analytics' ? 'bg-cyan-950 text-cyan-400 border border-cyan-800/50' : 'text-neutral-400 hover:text-white'}`}
+                        >
+                            Visitor Telemetry
+                        </button>
+                    </div>
+
+                    <button
+                        onClick={runSimulation} disabled={isRunning}
+                        className="px-3 py-1.5 bg-neutral-800 text-white text-[10px] uppercase tracking-wider rounded hover:bg-neutral-700 transition-colors disabled:opacity-50"
+                    >
+                        Simulate Edge Playback
+                    </button>
+                </div>
             </div>
 
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 relative z-10 mb-6">
+            <AnimatePresence mode="wait">
+                {activeTab === 'nodes' ? (
+                    <motion.div key="nodes" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="grid grid-cols-1 lg:grid-cols-3 gap-6 relative z-10 mb-6 text-center">
 
-                {/* Node 1: RabbitMQ Server */}
-                <div className={`p-4 rounded-lg border flex flex-col justify-center items-center gap-3 transition-colors duration-300 ${step === 1 ? 'bg-purple-900/20 border-purple-500/50' : 'bg-black border-neutral-800'}`}>
-                    <Server size={24} className={step === 1 ? 'text-purple-400' : 'text-neutral-600'} />
-                    <div className="text-center">
-                        <span className="block text-xs font-medium text-neutral-300">RabbitMQ Cluster</span>
-                        <span className="block text-[10px] text-neutral-500 mt-1">Manifests & Schedules</span>
-                    </div>
-                    {step === 1 && (
-                        <div className="w-full bg-purple-900/30 rounded border border-purple-500/30 p-2 mt-2">
-                            <span className="text-purple-300 text-[9px] uppercase tracking-widest block text-center animate-pulse">Pushing 42MB Payload</span>
-                        </div>
-                    )}
-                </div>
-
-                {/* Node 2: Edge Device + Camera */}
-                <div className={`p-4 rounded-lg border flex flex-col gap-3 transition-colors duration-300 ${(step === 2 || step === 3) ? 'bg-cyan-900/20 border-cyan-500/50' : 'bg-black border-neutral-800'}`}>
-                    <div className="flex justify-between items-center">
-                        <span className="text-xs font-medium text-neutral-300 flex items-center gap-2">
-                            <MonitorPlay size={14} className="text-cyan-500" /> Edge Display
-                        </span>
-                        <Camera size={14} className={step === 2 ? 'text-cyan-400 animate-pulse' : 'text-neutral-600'} />
-                    </div>
-
-                    <div className="h-20 bg-neutral-900 rounded border border-neutral-800 flex flex-col items-center justify-center relative overflow-hidden">
-                        {step === 0 || step === 1 ? (
-                            <span className="text-[10px] text-neutral-600 uppercase tracking-widest">Awaiting Audience</span>
-                        ) : step === 2 ? (
-                            <div className="text-center">
-                                <div className="w-16 h-16 border-2 border-cyan-500/50 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full animate-ping" />
-                                <span className="text-cyan-400 text-[10px] uppercase tracking-widest relative z-10">{detected}</span>
+                        {/* Node 1: RabbitMQ Server */}
+                        <div className={`p-4 rounded-lg border flex flex-col justify-center items-center gap-3 transition-colors duration-300 ${step === 1 ? 'bg-purple-900/20 border-purple-500/50' : 'bg-black border-neutral-800'}`}>
+                            <Server size={24} className={step === 1 ? 'text-purple-400 mx-auto' : 'text-neutral-600 mx-auto'} />
+                            <div className="text-center w-full">
+                                <span className="block text-xs font-medium text-neutral-300">RabbitMQ Cluster</span>
+                                <span className="block text-[10px] text-neutral-500 mt-1">Manifests & Targeting</span>
                             </div>
-                        ) : (
-                            <div className="w-full h-full bg-cyan-900/30 flex items-center justify-center">
-                                <span className="text-cyan-300 text-[10px] uppercase tracking-widest animate-pulse">Playing Ad Video...</span>
-                            </div>
-                        )}
-                    </div>
-                </div>
-
-                {/* Node 3: Redis Dashboard */}
-                <div className={`p-4 rounded-lg border flex flex-col gap-3 transition-colors duration-300 ${step === 4 ? 'bg-emerald-900/20 border-emerald-500/50' : 'bg-black border-neutral-800'}`}>
-                    <div className="flex items-center gap-2 mb-1">
-                        <Database size={14} className="text-emerald-500" />
-                        <span className="text-xs font-medium text-neutral-300">Redis Analytics</span>
-                    </div>
-
-                    <div className="grid grid-cols-2 gap-2">
-                        <div className="bg-neutral-900 rounded border border-neutral-800 p-2 flex flex-col items-center justify-center">
-                            <Users size={12} className="text-neutral-500 mb-1" />
-                            <span className={`text-sm font-bold ${step === 4 ? 'text-emerald-400' : 'text-neutral-300'}`}>{stats.headCount}</span>
-                            <span className="text-[8px] text-neutral-500 uppercase tracking-widest mt-1">Total Heads</span>
+                            {step === 1 && (
+                                <div className="w-full bg-purple-900/35 rounded border border-purple-500/30 p-2 mt-2">
+                                    <span className="text-purple-300 text-[9px] uppercase tracking-widest block text-center animate-pulse">Pushing Targeted Rules</span>
+                                </div>
+                            )}
                         </div>
-                        <div className="bg-neutral-900 rounded border border-neutral-800 p-2 flex flex-col items-center justify-center">
-                            <BarChart3 size={12} className="text-neutral-500 mb-1" />
-                            <div className="flex gap-2 text-xs font-bold mt-1">
-                                <span className="text-blue-400">{stats.male}%</span>
-                                <span className="text-pink-400">{stats.female}%</span>
-                            </div>
-                            <span className="text-[8px] text-neutral-500 uppercase tracking-widest mt-1">M / F Split</span>
-                        </div>
-                    </div>
-                </div>
 
-            </div>
+                        {/* Node 2: Edge Device + Camera */}
+                        <div className={`p-4 rounded-lg border flex flex-col items-center justify-between gap-3 transition-colors duration-300 ${(step === 2 || step === 3) ? 'bg-cyan-900/20 border-cyan-500/50' : 'bg-black border-neutral-800'}`}>
+                            <div className="flex justify-between items-center w-full px-2">
+                                <span className="text-xs font-medium text-neutral-300 flex items-center gap-2">
+                                    <MonitorPlay size={14} className="text-cyan-500" /> Edge Display
+                                </span>
+                                <Camera size={14} className={step === 2 ? 'text-cyan-400 animate-pulse' : 'text-neutral-600'} />
+                            </div>
+
+                            <div className="h-24 w-full bg-neutral-900 rounded border border-neutral-800 flex flex-col items-center justify-center relative overflow-hidden p-2">
+                                {step === 0 || step === 1 ? (
+                                    <div className="text-center">
+                                        <span className="text-[10px] text-neutral-600 uppercase tracking-widest block">Awaiting Audience</span>
+                                        <span className="text-[9px] text-cyan-500/70 block mt-1">Top Device: {detected.topDevice}</span>
+                                    </div>
+                                ) : step === 2 ? (
+                                    <div className="text-center w-full">
+                                        <div className="w-12 h-12 border-2 border-cyan-500/50 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full animate-ping" />
+                                        <span className="text-cyan-400 text-[10px] uppercase tracking-widest relative z-10 block font-bold">Detected: {detected.demographic}</span>
+                                        <span className="text-[9px] text-neutral-400 relative z-10 block mt-0.5">Target Match Found</span>
+                                    </div>
+                                ) : (
+                                    <div className="w-full h-full bg-cyan-950/40 flex flex-col items-center justify-center p-2 rounded">
+                                        <span className="text-cyan-300 text-[10px] uppercase tracking-widest animate-pulse font-bold">Playing Targeted Ad</span>
+                                        <span className="text-white text-[11px] font-bold mt-1 truncate max-w-[180px]">{detected.ad}</span>
+                                    </div>
+                                )}
+                            </div>
+
+                            <button
+                                onClick={handleSpecClick}
+                                className="text-[9px] text-cyan-400 uppercase tracking-widest bg-cyan-950/50 hover:bg-cyan-900/60 border border-cyan-800/50 px-3 py-1 rounded w-full transition-colors"
+                            >
+                                Inspect Ad Specs
+                            </button>
+                        </div>
+
+                        {/* Node 3: Redis Dashboard */}
+                        <div className={`p-4 rounded-lg border flex flex-col justify-between gap-3 transition-colors duration-300 ${step === 4 ? 'bg-emerald-900/20 border-emerald-500/50' : 'bg-black border-neutral-800'}`}>
+                            <div className="flex items-center justify-center gap-2 mb-1">
+                                <Database size={14} className="text-emerald-500" />
+                                <span className="text-xs font-medium text-neutral-300">Redis Analytics</span>
+                            </div>
+
+                            <div className="grid grid-cols-2 gap-2 w-full">
+                                <div className="bg-neutral-900 rounded border border-neutral-800 p-2 flex flex-col items-center justify-center">
+                                    <Users size={12} className="text-neutral-500 mb-1" />
+                                    <span className={`text-sm font-bold ${step === 4 ? 'text-emerald-400' : 'text-neutral-300'}`}>{stats.headCount}</span>
+                                    <span className="text-[8px] text-neutral-500 uppercase tracking-widest mt-1">Total Heads</span>
+                                </div>
+                                <div className="bg-neutral-900 rounded border border-neutral-800 p-2 flex flex-col items-center justify-center">
+                                    <BarChart3 size={12} className="text-neutral-500 mb-1" />
+                                    <div className="flex gap-2 text-xs font-bold mt-1">
+                                        <span className="text-blue-400">{stats.male}%</span>
+                                        <span className="text-pink-400">{stats.female}%</span>
+                                    </div>
+                                    <span className="text-[8px] text-neutral-500 uppercase tracking-widest mt-1">M / F Split</span>
+                                </div>
+                            </div>
+
+                            <div className="bg-neutral-900/60 rounded p-1.5 text-[9px] text-neutral-400 border border-neutral-800 text-center">
+                                Top Ad: <span className="text-cyan-300 font-bold">Performance Gear</span>
+                            </div>
+                        </div>
+
+                    </motion.div>
+                ) : (
+                    /* Live Visitor Telemetry Analytics View */
+                    <motion.div key="analytics" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="bg-black border border-neutral-800 rounded-lg p-5 text-center mb-6">
+                        <h4 className="text-xs text-cyan-400 uppercase tracking-widest font-bold mb-4">Real-Time Visitor Engagement Telemetry</h4>
+
+                        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 text-center">
+                            <div className="bg-neutral-900/60 p-3 rounded border border-neutral-800 flex flex-col items-center justify-center">
+                                <div className="flex items-center gap-1 text-[10px] text-neutral-500 uppercase mb-1">
+                                    <Eye size={12} className="text-cyan-400" /> Impressions
+                                </div>
+                                <span className="text-lg font-bold text-white">{telemetry.impressions}</span>
+                            </div>
+
+                            <div className="bg-neutral-900/60 p-3 rounded border border-neutral-800 flex flex-col items-center justify-center">
+                                <div className="flex items-center gap-1 text-[10px] text-neutral-500 uppercase mb-1">
+                                    <Clock size={12} className="text-cyan-400" /> Dwell Time
+                                </div>
+                                <span className="text-lg font-bold text-white">{telemetry.dwellSeconds}s</span>
+                            </div>
+
+                            <div className="bg-neutral-900/60 p-3 rounded border border-neutral-800 flex flex-col items-center justify-center">
+                                <div className="flex items-center gap-1 text-[10px] text-neutral-500 uppercase mb-1">
+                                    <MousePointerClick size={12} className="text-cyan-400" /> Total Clicks
+                                </div>
+                                <span className="text-lg font-bold text-emerald-400">{telemetry.clicks}</span>
+                            </div>
+
+                            <div className="bg-neutral-900/60 p-3 rounded border border-neutral-800 flex flex-col items-center justify-center">
+                                <div className="flex items-center gap-1 text-[10px] text-neutral-500 uppercase mb-1">
+                                    <Zap size={12} className="text-cyan-400" /> Spec Opens
+                                </div>
+                                <span className="text-lg font-bold text-cyan-300">{telemetry.specOpens}</span>
+                            </div>
+                        </div>
+
+                        <p className="text-[10px] text-neutral-500 text-center mt-4">
+                            All user interaction metrics stream over WebSockets to evaluate actual portfolio visibility and engagement performance.
+                        </p>
+                    </motion.div>
+                )}
+            </AnimatePresence>
 
             {/* Console Log */}
-            <div className="bg-black p-3 rounded-lg border border-neutral-800 flex items-center gap-3">
+            <div className="bg-black p-3 rounded-lg border border-neutral-800 flex items-center justify-center text-center gap-3">
                 <Activity size={14} className={isRunning ? "text-cyan-400 animate-pulse shrink-0" : "text-neutral-600 shrink-0"} />
                 <span className={isRunning ? "text-cyan-200 text-xs" : "text-neutral-500 text-xs"}>
                     {log}

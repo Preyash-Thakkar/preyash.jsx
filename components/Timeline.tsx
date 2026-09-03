@@ -120,7 +120,7 @@ export default function Timeline() {
                                     {item.credentials && item.credentials.length > 0 && (
                                         <div className="flex flex-col gap-2 md:items-end shrink-0">
                                             {item.credentials.map((cred, idx) => (
-                                                 <a key={idx} href={cred.href} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 text-xs text-neutral-500 hover:text-cyan-400 transition-colors attention-wobble">
+                                                <a key={idx} href={cred.href} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 text-xs text-neutral-500 hover:text-cyan-400 transition-colors attention-wobble">
                                                     <ExternalLink size={14} />
                                                     <span>{cred.label}</span>
                                                 </a>
